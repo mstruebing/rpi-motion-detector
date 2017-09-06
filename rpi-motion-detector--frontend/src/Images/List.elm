@@ -28,6 +28,7 @@ list images =
             [ thead []
                 [ tr []
                     [ th [] [ text "Path" ]
+                    , th [] [ text "Device" ]
                     , th [] [ text "Name" ]
                     , th [] [ text "Timestamp" ]
                     , th [] [ text "Preview" ]
@@ -42,6 +43,13 @@ imageRow : Image -> Html Msg
 imageRow image =
     tr []
         [ td [] [ text image.path ]
+        , td []
+            [ image.name
+                |> String.split "_"
+                |> List.head
+                |> Maybe.withDefault "Unknown Device"
+                |> text
+            ]
         , td [] [ text image.name ]
         , td [] [ text (toString image.timestamp) ]
         , td []
