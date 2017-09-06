@@ -6,6 +6,7 @@ import RemoteData exposing (WebData)
 type alias Model =
     { images : WebData (List Image)
     , route : Route
+    , timeSorting : Sorting
     }
 
 
@@ -13,7 +14,13 @@ initialModel : Route -> Model
 initialModel route =
     { images = RemoteData.Loading
     , route = route
+    , timeSorting = Desc
     }
+
+
+type Sorting
+    = Desc
+    | Asc
 
 
 type alias ImagePath =

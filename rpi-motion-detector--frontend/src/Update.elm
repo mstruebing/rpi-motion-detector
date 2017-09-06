@@ -18,3 +18,6 @@ update msg model =
                     parseLocation location
             in
             ( { model | route = newRoute }, Cmd.none )
+
+        Msgs.OnChangeSorting sorting ->
+            ( { model | timeSorting = sorting }, Cmd.none )

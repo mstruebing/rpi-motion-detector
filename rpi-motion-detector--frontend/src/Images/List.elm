@@ -2,28 +2,37 @@ module Images.List exposing (..)
 
 import Date exposing (Date, day, hour, minute, month, second, year)
 import Html exposing (..)
-import Html.Attributes exposing (class, height, href, src, target, width)
-import Models exposing (Image)
+import Html.Attributes exposing (class, height, href, placeholder, src, target, width)
+import Models exposing (..)
 import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
 
 
-view : WebData (List Image) -> Html Msg
-view response =
+view : WebData (List Image) -> Sorting -> Html Msg
+view response timeSorting =
     div []
         [ nav
-        , maybeList response
+        , maybeList response timeSorting
         ]
 
 
 nav : Html Msg
 nav =
     div [ class "clearfix mb2 white bg-black" ]
-        [ div [ class "left p2" ] [ text "Images" ] ]
+        [ div [ class "left p2" ] [ text "Images", search ] ]
 
 
-list : List Image -> Html Msg
-list images =
+search : Html Msg
+search =
+    div [ class "" ]
+        [ input
+            [ placeholder "Search Device" ]
+            []
+        ]
+
+
+list : List Image -> Sorting -> Html Msg
+list images timeSorting =
     div [ class "p2" ]
         [ table []
             [ thead []
@@ -36,10 +45,12 @@ list images =
                     ]
                 ]
             , tbody []
-                (images
-                    |> List.sortBy .timestamp
-                    |> List.reverse
-                    |> List.map imageRow
+                (case timeSorting of
+                    Models.Desc ->
+                        List.map imageRow (List.sortBy .timestamp images)
+
+                    Models.Asc ->
+                        List.map imageRow (List.reverse (List.sortBy .timestamp images))
                 )
             ]
         ]
@@ -91,8 +102,8 @@ makeTimeStringFromTimesamp timestamp =
            )
 
 
-maybeList : WebData (List Image) -> Html Msg
-maybeList response =
+maybeList : WebData (List Image) -> Sorting -> Html Msg
+maybeList response timeSorting =
     case response of
         RemoteData.NotAsked ->
             text ""
@@ -101,7 +112,7 @@ maybeList response =
             text "Loading"
 
         RemoteData.Success images ->
-            list images
+            list images timeSorting
 
         RemoteData.Failure error ->
             text (toString error)
