@@ -1,5 +1,6 @@
 module Images.List exposing (..)
 
+import Date exposing (Date, day, hour, minute, month, second, year)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, src, target, width)
 import Models exposing (Image)
@@ -30,11 +31,16 @@ list images =
                     [ th [] [ text "Path" ]
                     , th [] [ text "Device" ]
                     , th [] [ text "Name" ]
-                    , th [] [ text "Timestamp" ]
+                    , th [] [ text "Capture time" ]
                     , th [] [ text "Preview" ]
                     ]
                 ]
-            , tbody [] (List.map imageRow (List.sortBy .timestamp images))
+            , tbody []
+                (images
+                    |> List.sortBy .timestamp
+                    |> List.reverse
+                    |> List.map imageRow
+                )
             ]
         ]
 
@@ -51,13 +57,38 @@ imageRow image =
                 |> text
             ]
         , td [] [ text image.name ]
-        , td [] [ text (toString image.timestamp) ]
+        , td []
+            [ image.timestamp
+                |> makeTimeStringFromTimesamp
+                |> text
+            ]
         , td []
             [ a
                 [ href image.path, target "_blank" ]
                 [ img [ src image.path, width 200, height 200 ] [] ]
             ]
         ]
+
+
+makeTimeStringFromTimesamp : Int -> String
+makeTimeStringFromTimesamp timestamp =
+    timestamp
+        |> (*) 1000
+        |> toFloat
+        |> Date.fromTime
+        |> (\date ->
+                toString (Date.hour date)
+                    ++ ":"
+                    ++ toString (Date.minute date)
+                    ++ ":"
+                    ++ toString (Date.second date)
+                    ++ " on "
+                    ++ toString (Date.day date)
+                    ++ ". "
+                    ++ toString (Date.month date)
+                    ++ " "
+                    ++ toString (Date.year date)
+           )
 
 
 maybeList : WebData (List Image) -> Html Msg
