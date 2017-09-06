@@ -41,7 +41,7 @@ list images timeSorting =
                     [ th [] [ text "Path" ]
                     , th [] [ text "Device" ]
                     , th [] [ text "Name" ]
-                    , th [ onClick (changeSorting timeSorting) ] [ text "Capture time" ]
+                    , th [ onClick (changeSorting timeSorting) ] [ text ("Capture time " ++ sortingArrow timeSorting) ]
                     , th [] [ text "Preview" ]
                     ]
                 ]
@@ -55,6 +55,16 @@ list images timeSorting =
                 )
             ]
         ]
+
+
+sortingArrow : Sorting -> String
+sortingArrow sorting =
+    case sorting of
+        Models.Desc ->
+            "v"
+
+        Models.Asc ->
+            "^"
 
 
 changeSorting : Sorting -> Msg
