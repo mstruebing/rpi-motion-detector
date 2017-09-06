@@ -3,7 +3,8 @@ module Images.List exposing (..)
 import Date exposing (Date, day, hour, minute, month, second, year)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, target, width)
-import Models exposing (..)
+import Html.Events exposing (onClick)
+import Models exposing (Image, Sorting)
 import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
 
@@ -40,7 +41,7 @@ list images timeSorting =
                     [ th [] [ text "Path" ]
                     , th [] [ text "Device" ]
                     , th [] [ text "Name" ]
-                    , th [] [ text "Capture time" ]
+                    , th [ onClick (changeSorting timeSorting) ] [ text "Capture time" ]
                     , th [] [ text "Preview" ]
                     ]
                 ]
@@ -54,6 +55,16 @@ list images timeSorting =
                 )
             ]
         ]
+
+
+changeSorting : Sorting -> Msg
+changeSorting sorting =
+    case sorting of
+        Models.Asc ->
+            Msgs.OnChangeSorting Models.Desc
+
+        Models.Desc ->
+            Msgs.OnChangeSorting Models.Asc
 
 
 imageRow : Image -> Html Msg
