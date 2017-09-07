@@ -7,6 +7,7 @@ type alias Model =
     { images : WebData (List Image)
     , route : Route
     , timeSorting : Sorting
+    , deviceSearch : String
     }
 
 
@@ -15,6 +16,7 @@ initialModel route =
     { images = RemoteData.Loading
     , route = route
     , timeSorting = Desc
+    , deviceSearch = ""
     }
 
 

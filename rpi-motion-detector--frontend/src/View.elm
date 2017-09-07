@@ -16,7 +16,7 @@ page : Model -> Html Msg
 page model =
     case model.route of
         Models.ImagesRoute ->
-            Images.List.view model.images model.timeSorting
+            Images.List.view model.images model.timeSorting model.deviceSearch
 
         Models.NotFoundRoute ->
             notFoundView

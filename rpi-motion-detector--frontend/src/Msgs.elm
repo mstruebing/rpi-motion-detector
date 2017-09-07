@@ -10,3 +10,4 @@ type Msg
     = OnFetchImages (WebData (List Image))
     | OnLocationChange Location
     | OnChangeSorting Sorting
+    | OnInputDeviceSearch String

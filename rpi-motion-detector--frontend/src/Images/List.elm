@@ -3,17 +3,17 @@ module Images.List exposing (..)
 import Date exposing (Date, day, hour, minute, month, second, year)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, target, width)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
 import Models exposing (Image, Sorting)
 import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
 
 
-view : WebData (List Image) -> Sorting -> Html Msg
-view response timeSorting =
+view : WebData (List Image) -> Sorting -> String -> Html Msg
+view response timeSorting filter =
     div []
         [ nav
-        , maybeList response timeSorting
+        , maybeList response timeSorting filter
         ]
 
 
@@ -25,15 +25,11 @@ nav =
 
 search : Html Msg
 search =
-    div [ class "" ]
-        [ input
-            [ placeholder "Search Device" ]
-            []
-        ]
+    div [ class "" ] [ input [ onInput Msgs.OnInputDeviceSearch, placeholder "Search Device" ] [] ]
 
 
-list : List Image -> Sorting -> Html Msg
-list images timeSorting =
+list : List Image -> Sorting -> String -> Html Msg
+list images timeSorting filter =
     div [ class "p2" ]
         [ table []
             [ thead []
@@ -53,10 +49,16 @@ list images timeSorting =
             , tbody []
                 (case timeSorting of
                     Models.Desc ->
-                        List.map imageRow (List.reverse (List.sortBy .timestamp images))
+                        images
+                            |> List.filter (\image -> String.contains filter image.name)
+                            |> List.sortBy .timestamp
+                            |> List.reverse
+                            |> List.map imageRow
 
                     Models.Asc ->
-                        List.map imageRow (List.sortBy .timestamp images)
+                        images
+                            |> List.sortBy .timestamp
+                            |> List.map imageRow
                 )
             ]
         ]
@@ -65,10 +67,10 @@ list images timeSorting =
 sortingArrow : Sorting -> Html Msg
 sortingArrow sorting =
     case sorting of
-        Models.Desc ->
+        Models.Asc ->
             span [ class "fa fa-chevron-up" ] []
 
-        Models.Asc ->
+        Models.Desc ->
             span [ class "fa fa-chevron-down" ] []
 
 
@@ -128,8 +130,8 @@ makeTimeStringFromTimesamp timestamp =
            )
 
 
-maybeList : WebData (List Image) -> Sorting -> Html Msg
-maybeList response timeSorting =
+maybeList : WebData (List Image) -> Sorting -> String -> Html Msg
+maybeList response timeSorting filter =
     case response of
         RemoteData.NotAsked ->
             text ""
@@ -138,7 +140,7 @@ maybeList response timeSorting =
             text "Loading"
 
         RemoteData.Success images ->
-            list images timeSorting
+            list images timeSorting filter
 
         RemoteData.Failure error ->
             text (toString error)

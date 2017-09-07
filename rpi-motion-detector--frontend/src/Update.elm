@@ -21,3 +21,6 @@ update msg model =
 
         Msgs.OnChangeSorting sorting ->
             ( { model | timeSorting = sorting }, Cmd.none )
+
+        Msgs.OnInputDeviceSearch input ->
+            ( { model | deviceSearch = input }, Cmd.none )
