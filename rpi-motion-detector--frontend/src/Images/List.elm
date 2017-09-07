@@ -50,7 +50,7 @@ list images timeSorting filter =
                 (case timeSorting of
                     Models.Desc ->
                         images
-                            |> List.filter (\image -> String.contains filter image.name)
+                            |> List.filter (\image -> String.contains filter <| extractDeviceName image.name)
                             |> List.sortBy .timestamp
                             |> List.reverse
                             |> List.map imageRow
@@ -89,11 +89,7 @@ imageRow image =
     tr []
         [ td [] [ text image.path ]
         , td []
-            [ image.name
-                |> String.split "_"
-                |> List.head
-                |> Maybe.withDefault "Unknown Device"
-                |> text
+            [ text <| extractDeviceName image.name
             ]
         , td [] [ text image.name ]
         , td []
@@ -128,6 +124,14 @@ makeTimeStringFromTimesamp timestamp =
                     ++ " "
                     ++ toString (Date.year date)
            )
+
+
+extractDeviceName : String -> String
+extractDeviceName fileName =
+    fileName
+        |> String.split "_"
+        |> List.head
+        |> Maybe.withDefault "Unknown Device"
 
 
 maybeList : WebData (List Image) -> Sorting -> String -> Html Msg
