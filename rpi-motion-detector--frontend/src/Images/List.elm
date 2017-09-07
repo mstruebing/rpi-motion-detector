@@ -41,30 +41,35 @@ list images timeSorting =
                     [ th [] [ text "Path" ]
                     , th [] [ text "Device" ]
                     , th [] [ text "Name" ]
-                    , th [ onClick (changeSorting timeSorting) ] [ text ("Capture time " ++ sortingArrow timeSorting) ]
+                    , th []
+                        [ a [ onClick <| changeSorting timeSorting ]
+                            [ text "Capture time "
+                            , sortingArrow timeSorting
+                            ]
+                        ]
                     , th [] [ text "Preview" ]
                     ]
                 ]
             , tbody []
                 (case timeSorting of
                     Models.Desc ->
-                        List.map imageRow (List.sortBy .timestamp images)
+                        List.map imageRow (List.reverse (List.sortBy .timestamp images))
 
                     Models.Asc ->
-                        List.map imageRow (List.reverse (List.sortBy .timestamp images))
+                        List.map imageRow (List.sortBy .timestamp images)
                 )
             ]
         ]
 
 
-sortingArrow : Sorting -> String
+sortingArrow : Sorting -> Html Msg
 sortingArrow sorting =
     case sorting of
         Models.Desc ->
-            "v"
+            span [ class "fa fa-chevron-up" ] []
 
         Models.Asc ->
-            "^"
+            span [ class "fa fa-chevron-down" ] []
 
 
 changeSorting : Sorting -> Msg
