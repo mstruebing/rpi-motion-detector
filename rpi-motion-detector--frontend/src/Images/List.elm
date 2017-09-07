@@ -46,22 +46,24 @@ list images timeSorting filter =
                     , th [] [ text "Preview" ]
                     ]
                 ]
-            , tbody []
-                (case timeSorting of
-                    Models.Desc ->
-                        images
-                            |> List.filter (\image -> String.contains filter <| extractDeviceName image.name)
-                            |> List.sortBy .timestamp
-                            |> List.reverse
-                            |> List.map imageRow
-
-                    Models.Asc ->
-                        images
-                            |> List.sortBy .timestamp
-                            |> List.map imageRow
-                )
+            , tbody [] (List.map imageRow (buildTableBody images timeSorting filter))
             ]
         ]
+
+
+buildTableBody : List Image -> Sorting -> String -> List Image
+buildTableBody images timeSorting filter =
+    case timeSorting of
+        Models.Desc ->
+            images
+                |> List.filter (\image -> String.contains filter <| extractDeviceName image.name)
+                |> List.sortBy .timestamp
+                |> List.reverse
+
+        Models.Asc ->
+            images
+                |> List.filter (\image -> String.contains filter <| extractDeviceName image.name)
+                |> List.sortBy .timestamp
 
 
 sortingArrow : Sorting -> Html Msg
