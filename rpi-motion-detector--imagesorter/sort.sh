@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
+INCOMING_DIR='.'
+TARGET_DIR='..'
+
 # replace start of string ./ with nothing 
-COUNT=$(find . -name '*.jpg' | sed 's/^\.\///' | wc -l)
+COUNT=$(find $INCOMING_DIR -name '*.jpg' | sed 's/^\.\///' | wc -l)
 if [ "$COUNT" != 0 ]; then
 	for f in *.jpg; do
 		HOST=${f%_*}
@@ -12,7 +15,7 @@ if [ "$COUNT" != 0 ]; then
 		MONTH=$(date +%m --date=@"$DATE")
 		DAY=$(date +%d --date=@"$DATE")
 
-		DIR=../$HOST/$YEAR/$MONTH/$DAY
+		DIR=$TARGET_DIR/$HOST/$YEAR/$MONTH/$DAY
 
 		WIDTH=$(identify -format "%W" "$f")
 		HEIGHT=$(identify -format "%H" "$f")
