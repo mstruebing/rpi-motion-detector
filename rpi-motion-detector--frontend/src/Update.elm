@@ -1,8 +1,8 @@
 module Update exposing (..)
 
+import Commands exposing (updateImages)
 import Models exposing (Image, Model)
 import Msgs exposing (Msg(..))
-import RemoteData
 import Routing exposing (parseLocation)
 
 
@@ -11,6 +11,12 @@ update msg model =
     case msg of
         Msgs.OnFetchImages response ->
             ( { model | images = response }, Cmd.none )
+
+        Msgs.OnTryToUpdateImages time ->
+            ( { model | lastUpdate = time }, updateImages )
+
+        Msgs.OnUpdateImages response ->
+            ( { model | newImages = response }, Cmd.none )
 
         Msgs.OnLocationChange location ->
             let
@@ -24,3 +30,6 @@ update msg model =
 
         Msgs.OnInputDeviceSearch input ->
             ( { model | deviceSearch = input }, Cmd.none )
+
+        Msgs.OnTime time ->
+            ( { model | lastUpdate = time }, Cmd.none )
