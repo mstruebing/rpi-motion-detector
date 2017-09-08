@@ -1,6 +1,6 @@
 module Update exposing (..)
 
-import Commands exposing (updateImages)
+import Commands exposing (fetchImages, updateImages)
 import Models exposing (Image, Model)
 import Msgs exposing (Msg(..))
 import Routing exposing (parseLocation)
@@ -33,3 +33,6 @@ update msg model =
 
         Msgs.OnTime time ->
             ( { model | lastUpdate = time }, Cmd.none )
+
+        Msgs.FetchImages ->
+            ( model, fetchImages )

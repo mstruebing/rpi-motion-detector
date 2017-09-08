@@ -2,6 +2,7 @@ module Images.List exposing (..)
 
 import Commands exposing (fetchImages)
 import Date exposing (Date, day, hour, minute, month, second, year)
+import Debug exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, target, width)
 import Html.Events exposing (onClick, onInput)
@@ -34,10 +35,10 @@ search =
 newImagesMessage : Int -> Html Msg
 newImagesMessage count =
     if count > 0 then
-        div []
+        div [ onClick Msgs.FetchImages ]
             [ text <| toString count ++ " New Images, reload the page to see them" ]
     else
-        div [] []
+        text ""
 
 
 list : List Image -> Sorting -> String -> Html Msg
@@ -178,7 +179,7 @@ maybeNewImages initialResponse updateResponse =
                     text ""
 
                 RemoteData.Success newImages ->
-                    newImagesMessage <| List.length images - List.length newImages
+                    newImagesMessage <| (List.length newImages - List.length images)
 
                 RemoteData.Failure error ->
                     text ""

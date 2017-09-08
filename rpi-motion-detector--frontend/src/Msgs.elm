@@ -14,3 +14,4 @@ type Msg
     | OnChangeSorting Sorting
     | OnInputDeviceSearch String
     | OnTime Time
+    | FetchImages
