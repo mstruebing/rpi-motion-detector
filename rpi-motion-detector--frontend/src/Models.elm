@@ -1,10 +1,13 @@
 module Models exposing (..)
 
 import RemoteData exposing (WebData)
+import Time exposing (Time)
 
 
 type alias Model =
     { images : WebData (List Image)
+    , lastUpdate : Time
+    , newImages : WebData (List Image)
     , route : Route
     , timeSorting : Sorting
     , deviceSearch : String
@@ -14,6 +17,8 @@ type alias Model =
 initialModel : Route -> Model
 initialModel route =
     { images = RemoteData.Loading
+    , newImages = RemoteData.Loading
+    , lastUpdate = 0
     , route = route
     , timeSorting = Desc
     , deviceSearch = ""
@@ -32,7 +37,7 @@ type alias ImagePath =
 type alias Image =
     { name : String
     , path : ImagePath
-    , timestamp : Int
+    , timestamp : Float
     }
 
 

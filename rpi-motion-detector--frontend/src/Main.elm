@@ -1,10 +1,12 @@
 module Main exposing (..)
 
-import Commands exposing (fetchImages)
+import Commands exposing (fetchImages, updateImages)
 import Models exposing (Model, initialModel)
 import Msgs exposing (Msg)
 import Navigation exposing (Location)
 import Routing
+import Tasks exposing (getTime)
+import Time exposing (Time, minute)
 import Update exposing (update)
 import View exposing (view)
 
@@ -15,7 +17,7 @@ init location =
         currentRoute =
             Routing.parseLocation location
     in
-    ( initialModel currentRoute, fetchImages )
+    ( initialModel currentRoute, Cmd.batch [ fetchImages, getTime ] )
 
 
 
@@ -24,7 +26,7 @@ init location =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Time.every minute Msgs.OnTryToUpdateImages
 
 
 
