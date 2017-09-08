@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-COUNT=`ls -1 *.jpg 2>/dev/null | wc -l`
-if [ $COUNT != 0 ]; then
+# replace start of string ./ with nothing 
+COUNT=$(find . -name '*.jpg' | sed 's/^\.\///' | wc -l)
+if [ "$COUNT" != 0 ]; then
 	for f in *.jpg; do
 		HOST=${f%_*}
 		NAME=${f##*_}
@@ -13,12 +14,10 @@ if [ $COUNT != 0 ]; then
 
 		DIR=../$HOST/$YEAR/$MONTH/$DAY
 
-		IMAGE_SIZE=`file -b $f | sed 's/ //g' | sed 's/,/ /g' | awk  '{print $2}'`
-		WIDTH=`identify -format "%W" "$f"`
-		HEIGHT=`identify -format "%H" "$f"`
-		echo size: $WIDTH $HEIGHT
+		WIDTH=$(identify -format "%W" "$f")
+		HEIGHT=$(identify -format "%H" "$f")
 		# If the image width is greater that 200 or the height is greater that 150 a thumb is created
-		if [ $WIDTH -ge  201 ] || [ $HEIGHT -ge 201 ]; then
+		if [ "$WIDTH" -ge  201 ] || [ "$HEIGHT" -ge 201 ]; then
 	        	#This line convert the image in a 200 x 150 thumb
 	        	filename=$(basename "$f")
 		        extension="${filename##*.}"
@@ -31,6 +30,4 @@ if [ $COUNT != 0 ]; then
 		fi
 		mv "$f" "$DIR"
 	done
-else
-	echo "lol"
 fi
