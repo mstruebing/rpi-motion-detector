@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -f *.jpg ]; then
+COUNT=`ls -1 *.jpg 2>/dev/null | wc -l`
+if [ $COUNT != 0 ]; then
 	for f in *.jpg; do
 		HOST=${f%_*}
 		NAME=${f##*_}
@@ -17,4 +18,6 @@ if [ -f *.jpg ]; then
 		fi
 		mv "$f" "$DIR"
 	done
+else
+	echo "lol"
 fi
