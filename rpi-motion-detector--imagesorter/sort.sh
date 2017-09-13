@@ -2,6 +2,8 @@
 
 INCOMING_DIR='.'
 TARGET_DIR='..'
+THUMBNAIL_WIDTH='200'
+THUMBNAIL_HEIGHT='200'
 
 # replace start of string ./ with nothing 
 COUNT=$(find $INCOMING_DIR -name '*.jpg' | sed 's/^\.\///' | wc -l)
@@ -17,6 +19,10 @@ if [ "$COUNT" != 0 ]; then
 
 		DIR=$TARGET_DIR/$HOST/$YEAR/$MONTH/$DAY
 
+		if [ ! -d "$DIR" ]; then
+			mkdir -p "$DIR"
+		fi
+
 		WIDTH=$(identify -format "%W" "$f")
 		HEIGHT=$(identify -format "%H" "$f")
 		# If the image width is greater that 200 or the height is greater that 150 a thumb is created
@@ -25,12 +31,9 @@ if [ "$COUNT" != 0 ]; then
 	        	filename=$(basename "$f")
 		        extension="${filename##*.}"
         		filename="${filename%.*}"
-		        convert -sample 200x200 "$f" "$DIR/${filename}_thumb.${extension}"
+		        convert -sample "$THUMBNAIL_WIDTH"x"$THUMBNAIL_HEIGHT" "$f" "$DIR/${filename}_thumb.${extension}"
      		fi
 
-		if [ ! -d "$DIR" ]; then
-			mkdir -p "$DIR"
-		fi
 		mv "$f" "$DIR"
 	done
 fi
