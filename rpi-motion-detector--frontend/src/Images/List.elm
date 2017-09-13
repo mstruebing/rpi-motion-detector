@@ -35,8 +35,11 @@ search =
 newImagesMessage : Int -> Html Msg
 newImagesMessage count =
     if count > 0 then
-        div [ onClick Msgs.FetchImages ]
-            [ text <| toString count ++ " New Images, reload the page to see them" ]
+        div []
+            [ a
+                [ onClick Msgs.FetchImages ]
+                [ text <| toString count ++ " New Images, reload the page to see them" ]
+            ]
     else
         text ""
 
