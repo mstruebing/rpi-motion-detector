@@ -37,6 +37,7 @@ type alias ImagePath =
 type alias Image =
     { name : String
     , path : ImagePath
+    , thumbnail : ImagePath
     , timestamp : Float
     }
 

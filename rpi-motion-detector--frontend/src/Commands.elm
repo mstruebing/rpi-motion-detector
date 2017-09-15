@@ -37,4 +37,5 @@ imageDecoder =
     decode Image
         |> required "name" Decode.string
         |> required "path" Decode.string
+        |> required "thumbnail" Decode.string
         |> required "timestamp" Decode.float

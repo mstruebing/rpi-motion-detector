@@ -118,7 +118,7 @@ imageRow image =
         , td []
             [ a
                 [ href image.path, target "_blank" ]
-                [ img [ src image.path, width 200, height 200 ] [] ]
+                [ img [ src image.thumbnail, width 200, height 200 ] [] ]
             ]
         ]
 

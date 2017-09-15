@@ -2,52 +2,62 @@
   "images": [
     {
       "name": "rpi1_1504253714.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253714
     },
     {
       "name": "rpi1_1504253715.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253715
     },
     {
       "name": "rpi1_1504253716.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253716
     },
     {
       "name": "rpi1_1504253717.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253717
     },
     {
       "name": "rpi1_1504253718.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253718
     },
     {
       "name": "rpi2_1504253719.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253719
     },
     {
       "name": "rpi2_1504253720.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253720
     },
     {
       "name": "rpi2_1504253721.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253721
     },
     {
       "name": "rpi2_1504253722.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253722
     },
     {
       "name": "rpi2_1504253723.jpg",
-      "path": "http://via.placeholder.com/350x150",
+      "path": "http://via.placeholder.com/1000x1000",
+      "thumbnail": "http://via.placeholder.com/200x200",
       "timestamp": 1504253723
     }
   ]
