@@ -24,7 +24,9 @@ updateImages =
 
 fetchImagesUrl : String
 fetchImagesUrl =
-    "http://localhost:4000/images"
+    -- "http://localhost:4000/images"
+    -- "https://maex.me/img/db.json"
+    "https://image-api.hokanhub.com/?token=aGZYPZqeyvyAmvbHUTpvkHC9HYjEDzvh"
 
 
 imagesDecoder : Decode.Decoder (List Image)
