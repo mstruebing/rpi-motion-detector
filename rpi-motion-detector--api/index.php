@@ -19,9 +19,9 @@ function get_string_between($string, $start, $end){
 }
 
 // Url where Images are accessible
-$url = 'https://image-api.hokanhub.com/files/';
+$url = 'https://image-api.hokanhub.com/files/processed/';
 // Where to search for images
-$path = '/var/www/html/image-api/files/';
+$path = '/var/www/html/image-api/files/processed';
 // Extensions of Images
 $extension = 'jpg';
 // How deep to search for files

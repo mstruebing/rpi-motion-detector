@@ -3,7 +3,7 @@
 set -e
 
 INCOMING_DIR='.'
-TARGET_DIR='..'
+TARGET_DIR='../processed'
 THUMBNAIL_WIDTH='200'
 THUMBNAIL_HEIGHT='200'
 LOCKFILE="$HOME/.image-sorter.lock"
