@@ -53,11 +53,10 @@ if [[ $COUNT -gt 0 ]]; then
         timestamp=$(getTimestampFromFilename "$f")
         deviceName=$(getDeviceNameFromfilename "$f")
         mv "$f" $PROCESSED_DIR/"$deviceName"_"$timestamp".jpg
-        rm "$f"
     done
 
     rsync -avz $PROCESSED_DIR/*.jpg alex:/var/www/html/image-api/files/incoming/
-    rm $PROCESSED_DIR/*.jpg
+    rm -f $PROCESSED_DIR/*.jpg
 
 fi
 
