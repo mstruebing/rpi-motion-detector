@@ -1,14 +1,13 @@
 module Images.List exposing (..)
 
-import Commands exposing (fetchImages)
 import Date exposing (Date, day, hour, minute, month, second, year)
-import Debug exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (class, height, href, placeholder, src, target, width)
 import Html.Events exposing (onClick, onInput)
 import Models exposing (Image, Sorting)
 import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
+import String exposing (padLeft)
 import Time exposing (Time)
 
 
@@ -105,14 +104,14 @@ changeSorting sorting =
 imageRow : Image -> Html Msg
 imageRow image =
     tr []
-        [ td [] [ text image.path ]
+        [ td [] [ a [ href image.path, target "_blank" ] [ text image.path ] ]
         , td []
             [ text <| extractDeviceName image.name
             ]
         , td [] [ text image.name ]
         , td []
             [ image.timestamp
-                |> makeTimeStringFromTimesamp
+                |> makeTimeStringFromTimestamp
                 |> text
             ]
         , td []
@@ -136,24 +135,29 @@ makeLastUpdateString timestamp =
            )
 
 
-makeTimeStringFromTimesamp : Float -> String
-makeTimeStringFromTimesamp timestamp =
+makeTimeStringFromTimestamp : Float -> String
+makeTimeStringFromTimestamp timestamp =
     timestamp
         |> (*) 1000
         |> Date.fromTime
         |> (\date ->
-                toString (Date.hour date)
+                getDatePart Date.hour date 2
                     ++ ":"
-                    ++ toString (Date.minute date)
+                    ++ getDatePart Date.minute date 2
                     ++ ":"
-                    ++ toString (Date.second date)
+                    ++ getDatePart Date.second date 2
                     ++ " on "
-                    ++ toString (Date.day date)
+                    ++ getDatePart Date.day date 2
                     ++ ". "
                     ++ toString (Date.month date)
                     ++ " "
-                    ++ toString (Date.year date)
+                    ++ getDatePart Date.year date 4
            )
+
+
+getDatePart : (Date -> Int) -> Date -> Int -> String
+getDatePart part date padding =
+    toString (part date) |> padLeft padding '0'
 
 
 extractDeviceName : String -> String
