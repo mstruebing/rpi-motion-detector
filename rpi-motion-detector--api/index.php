@@ -1,4 +1,7 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+
+if (isset($_GET['token']) && $_GET['token'] === aGZYPZqeyvyAmvbHUTpvkHC9HYjEDzvh) {
 
 /**
  * @param $string string to search in
@@ -16,7 +19,7 @@ function get_string_between($string, $start, $end){
 }
 
 // Url where Images are accessible
-$url = 'https://image-api.hokanhub.com/';
+$url = 'https://image-api.hokanhub.com/files/';
 // Where to search for images
 $path = '/var/www/html/image-api/files/';
 // Extensions of Images
@@ -47,11 +50,14 @@ foreach ($it as $file) {
             // Full URL where to access image thumbnail
             'thumbnail' => $url.$it->getSubPath().'/'.preg_replace('/\\.'.$extension.'$/', '_thumb$0', $file->getFilename()),
             // Timestamp of Image
-            'timestamp' => get_string_between($file->getFilename(),'_','.'),
+            'timestamp' => (int)get_string_between($file->getFilename(),'_','.'),
         ]);
     }
 }
 // return $images json encoded
 echo json_encode($images,JSON_UNESCAPED_SLASHES);
+} else {
+    header('HTTP/1.0 403 Forbidden');
+}
 
 
