@@ -1,9 +1,29 @@
 #!/usr/bin/env bash
 
+set -e
+
 INCOMING_DIR='.'
 TARGET_DIR='..'
 THUMBNAIL_WIDTH='200'
 THUMBNAIL_HEIGHT='200'
+LOCKFILE="$HOME/.image-sorter.lock"
+
+function createLockFile() {
+    if [[ -f $LOCKFILE ]]; then
+        exit 1
+    fi
+
+    touch "$LOCKFILE" 
+    return 0
+}
+
+function removeLockFile() {
+    if [[ -f $LOCKFILE ]]; then
+        rm "$LOCKFILE"
+    fi
+}
+
+createLockFile
 
 # replace start of string ./ with nothing 
 COUNT=$(find $INCOMING_DIR -name '*.jpg' | sed 's/^\.\///' | wc -l)
@@ -37,3 +57,5 @@ if [ "$COUNT" != 0 ]; then
 		mv "$f" "$DIR"
 	done
 fi
+
+removeLockFile
