@@ -127,11 +127,11 @@ makeLastUpdateString timestamp =
     timestamp
         |> Date.fromTime
         |> (\date ->
-                toString (Date.hour date)
+                getDatePart Date.hour date 2
                     ++ ":"
-                    ++ toString (Date.minute date)
+                    ++ getDatePart Date.minute date 2
                     ++ ":"
-                    ++ toString (Date.second date)
+                    ++ getDatePart Date.second date 2
            )
 
 
