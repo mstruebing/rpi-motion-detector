@@ -170,28 +170,11 @@ extractDeviceName fileName =
 
 maybeNewImages : WebData (List Image) -> WebData (List Image) -> Html Msg
 maybeNewImages initialResponse updateResponse =
-    case initialResponse of
-        RemoteData.NotAsked ->
-            text ""
+    case ( initialResponse, updateResponse ) of
+        ( RemoteData.Success images, RemoteData.Success newImages ) ->
+            newImagesMessage <| (List.length newImages - List.length images)
 
-        RemoteData.Loading ->
-            text ""
-
-        RemoteData.Success images ->
-            case updateResponse of
-                RemoteData.NotAsked ->
-                    text ""
-
-                RemoteData.Loading ->
-                    text ""
-
-                RemoteData.Success newImages ->
-                    newImagesMessage <| (List.length newImages - List.length images)
-
-                RemoteData.Failure error ->
-                    text ""
-
-        RemoteData.Failure error ->
+        _ ->
             text ""
 
 
